@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login">
+    tools:context=".register">
 
     <TextView
         android:id="@+id/textView"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="@string/register" />
         <TextView
-            android:id="@+id/LoginNow"
+            android:id="@+id/RegisterNow"
             android:text="@string/click_to_login"
             android:layout_width="match_parent"
             android:gravity="center"

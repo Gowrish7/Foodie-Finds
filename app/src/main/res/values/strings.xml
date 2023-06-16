@@ -8,4 +8,7 @@
     <string name="click_to_login">CLick to login</string>
     <string name="click_to_register">Click to register</string>
     <string name="textview">TextView</string>
+    <string name="admin">Admin</string>
+    <string name="user">User</string>
+    <string name="admin_login">Admin Login</string>
 </resources>

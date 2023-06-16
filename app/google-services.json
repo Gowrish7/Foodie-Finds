@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "661599980951",
+    "firebase_url": "https://madlab-31e2d-default-rtdb.firebaseio.com",
+    "project_id": "madlab-31e2d",
+    "storage_bucket": "madlab-31e2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661599980951:android:8464646a219d7f90edc8d2",
+        "android_client_info": {
+          "package_name": "com.example.madlabproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661599980951-vv812rd0d5mhgpjpk4ml89sn4ffbqnlh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGmqqPfbizIx1we6_gXH0NJWD9mXqL70c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "661599980951-vv812rd0d5mhgpjpk4ml89sn4ffbqnlh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
