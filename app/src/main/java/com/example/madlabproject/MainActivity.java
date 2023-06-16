@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     Button button;
@@ -19,10 +22,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         button=findViewById(R.id.logout);
         text=findViewById(R.id.note);
-
+        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            Intent intent=new Intent(getApplicationContext(),login.class);
+            startActivity(intent);
+            finish();;
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 Intent intent=new Intent(getApplicationContext(),register.class);
                 startActivity(intent);
                 finish();
