@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".admin_panel">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -25,20 +25,19 @@
             android:id="@+id/note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:textSize="30dp"
-            android:textAlignment="center"
-            android:text="User Panel" />
-        <TextView
-            android:id="@+id/demotext"
+            android:text="Admin Panel" />
+        <EditText
+            android:id="@+id/demotextfield"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="hello"/>
+            android:layout_height="50dp"
+            android:hint="Enter value to update"/>
         <Button
-            android:id="@+id/refresh"
+            android:id="@+id/set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="refresh" />
+            android:text="Set Value" />
 
         <Button
             android:id="@+id/logout"
