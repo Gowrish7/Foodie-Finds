@@ -90,8 +90,8 @@ public class login extends AppCompatActivity {
                             }
                         });
 
-//                Intent intent=new Intent(getApplicationContext(),register.class);
-//                startActivity(intent);
+//                Intent com.example.madlabproject.intent=new Intent(getApplicationContext(),register.class);
+//                startActivity(com.example.madlabproject.intent);
 //                finish();
             }
         });

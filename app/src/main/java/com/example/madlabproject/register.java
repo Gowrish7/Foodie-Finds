@@ -75,8 +75,8 @@ public class register extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                     // Sign in success, update UI with the signed-in user's information
                                     FirebaseUser user = mAuth.getCurrentUser();
-//                                    Intent intent=new Intent(getApplicationContext(),login.class);
-//                                    startActivity(intent);
+//                                    Intent com.example.madlabproject.intent=new Intent(getApplicationContext(),login.class);
+//                                    startActivity(com.example.madlabproject.intent);
 //                                    finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -85,8 +85,8 @@ public class register extends AppCompatActivity {
                                 }
                             }
                         });
-//                Intent intent=new Intent(getApplicationContext(),login.class);
-//                startActivity(intent);
+//                Intent com.example.madlabproject.intent=new Intent(getApplicationContext(),login.class);
+//                startActivity(com.example.madlabproject.intent);
 ////                finish();
             }
         });

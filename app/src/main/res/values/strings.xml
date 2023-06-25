@@ -11,4 +11,9 @@
     <string name="admin">Admin</string>
     <string name="user">User</string>
     <string name="admin_login">Admin Login</string>
+    <string-array name="languages">
+        <item>Snacks</item>
+        <item>Stationary</item>
+        <item>Soft drinks</item>
+    </string-array>
 </resources>
