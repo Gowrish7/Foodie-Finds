@@ -1,43 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".admin_panel">
+    
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:gravity="center"
-        android:layout_height="354dp"
+        android:layout_height="800dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="376dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="50dp"
+            android:text="Admin Panel"
             android:textAlignment="center"
-            android:textSize="30dp"
-            android:text="Admin Panel" />
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/grey1"
+            android:contextClickable="true"
+            android:tooltipText="Add image"
+            android:keepScreenOn="false"/>
         <EditText
             android:id="@+id/demotextfield"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Enter value to update"/>
+            android:layout_marginTop="10dp"
+            android:hint="Enter title"
+            android:textColorHint="@color/black"/>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey1"
+            android:layout_marginBottom="10dp"
+            android:layout_height="58dp"
+            android:isScrollContainer="true" />
+
+        <EditText
+            android:id="@+id/demotextfielddescription"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="@color/grey1"
+            android:layout_marginBottom="10dp"
+            android:hint="Enter Description"
+            android:textColorHint="@color/black" />
+
+        <EditText
+            android:id="@+id/demotextfieldcost"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter Cost"
+            android:textColorHint="@color/black"/>
+
         <Button
             android:id="@+id/set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Set Value" />
+            android:text="Add item" />
 
         <Button
             android:id="@+id/logout"
@@ -45,5 +86,6 @@
             android:layout_height="wrap_content"
             android:text="logout" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
