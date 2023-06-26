@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.madlabproject.choose;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,10 +39,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     Button button,refresh;
-    String desc,cost,title;
+    String desc,cost,title,count;
     TextView demotext;
     private ListenerRegistration fieldListenerRegistration;
-    EditText demotextfield,demotextfielddescription,demotextfieldcost,search;
+    EditText demotextfield,demotextfielddescription,demotextfieldcost,demotextfieldcount,search;
     ImageView imageview;
     TextView text;
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         demotextfield=findViewById(R.id.demotextfield);
         demotextfielddescription=findViewById(R.id.demotextfielddescription);
         demotextfieldcost=findViewById(R.id.demotextfieldcost);
+        demotextfieldcount=findViewById(R.id.demotextfieldcount);
         imageview=findViewById(R.id.imageview);
         search=findViewById(R.id.search);
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                         title = document.getString("title");
                                         desc = document.getString("description");
                                         cost = document.getString("cost");
+                                        count=document.getString("count");
 
                                         // Access other fields as needed
                                         // ...
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             demotextfield.setText(title);
                             demotextfielddescription.setText(desc);
                             demotextfieldcost.setText(cost);
+                            demotextfieldcount.setText(count);
 
                             // Retrieve and display the image
                             String imageName = demotextfield.getText().toString() + demotextfieldcost.getText().toString() + ".jpg";
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
         button.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(getApplicationContext(),choose.class);
+            Intent intent=new Intent(getApplicationContext(), choose.class);
             startActivity(intent);
             finish();
         });

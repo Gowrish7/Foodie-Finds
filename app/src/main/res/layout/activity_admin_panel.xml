@@ -43,6 +43,7 @@
             android:keepScreenOn="false"/>
         <EditText
             android:id="@+id/demotextfield"
+            android:background="@color/grey1"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -66,11 +67,21 @@
             android:layout_marginBottom="10dp"
             android:hint="Enter Description"
             android:textColorHint="@color/black" />
+        <EditText
+            android:id="@+id/demotextfieldcount"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="@color/grey1"
+            android:layout_marginBottom="10dp"
+            android:hint="Enter Unit count"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/demotextfieldcost"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/grey1"
+            android:layout_marginBottom="10dp"
             android:hint="Enter Cost"
             android:textColorHint="@color/black"/>
 
