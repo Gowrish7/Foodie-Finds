@@ -42,7 +42,7 @@ import java.util.Map;
 public class admin_panel extends AppCompatActivity {
 
     Button button,set;
-    EditText demotextfield,demotextfielddescription,demotextfieldcost;
+    EditText demotextfield,demotextfielddescription,demotextfieldcost,demotextfieldcount;
     ImageView imageview;
     TextView text;
     String selected;
@@ -87,6 +87,7 @@ public class admin_panel extends AppCompatActivity {
         demotextfieldcost=findViewById(R.id.demotextfieldcost);
         set=findViewById(R.id.set);
         imageview=findViewById(R.id.imageview);
+        demotextfieldcount=findViewById(R.id.demotextfieldcount);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         ActivityResultLauncher<String> imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -126,6 +127,12 @@ public class admin_panel extends AppCompatActivity {
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String count=demotextfieldcount.getText().toString();
+                if(Integer.parseInt(count)<=0){
+                    Toast.makeText(admin_panel.this, "Enter valid unit count",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
                 Uri imageUri =uri ; // The URI of the image you want to upload
 
 // Create a reference to the location where you want to store the image
@@ -151,13 +158,12 @@ public class admin_panel extends AppCompatActivity {
                 FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                 CollectionReference collectionRef = firestore.collection("products");
                 collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             QuerySnapshot querySnapshot = task.getResult();
 
                             if (querySnapshot != null) {
-                                documentcount = (querySnapshot.size()+1);
+                                documentcount = (querySnapshot.size()+2);
                                 DocumentReference docref=firestore.collection("products").document("product"+documentcount);
                                 Map<String, Object> data = new HashMap<>();
                                 data.put("title", demotextfield.getText().toString());
@@ -165,6 +171,7 @@ public class admin_panel extends AppCompatActivity {
                                 data.put("cost",demotextfieldcost.getText().toString());
                                 data.put("uri",uri);
                                 data.put("category",selected);
+                                data.put("count",count);
                                 docref.set(data)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -184,10 +191,11 @@ public class admin_panel extends AppCompatActivity {
                                 demotextfieldcost.setText("");
                                 demotextfielddescription.setText("");
                                 demotextfield.setText("");
+                                demotextfieldcount.setText("");
                             }
                         }
                     }
-                });
+                });}
 
             }
         });
