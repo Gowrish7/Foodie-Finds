@@ -21,14 +21,14 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class pc_adapter extends RecyclerView.Adapter<pc_adapter.myviewholder> {
+public class cart_adapter extends RecyclerView.Adapter<cart_adapter.myviewholder> {
     ArrayList<productmodel> productmodels1;
     ArrayList<productmodel> copyproductmodels;
     Context context;
     String search;
     int holderpos;
     private selectlistener listener;
-    public pc_adapter(Context context, ArrayList<productmodel> productmodels,String search,ArrayList<productmodel>copyproductmodels,selectlistener listener){
+    public cart_adapter(Context context, ArrayList<productmodel> productmodels,String search,ArrayList<productmodel>copyproductmodels,selectlistener listener){
         this.search=search;
         this.context=context;
         this.productmodels1=productmodels;
@@ -37,20 +37,20 @@ public class pc_adapter extends RecyclerView.Adapter<pc_adapter.myviewholder> {
     }
     @NonNull
     @Override
-    public pc_adapter.myviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public cart_adapter.myviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflator=LayoutInflater.from(context);
-        View view=inflator.inflate(R.layout.item_layout,parent,false);
-        return new pc_adapter.myviewholder(view);
+        View view=inflator.inflate(R.layout.adminitem_layout,parent,false);
+        return new cart_adapter.myviewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull pc_adapter.myviewholder holder, @SuppressLint("RecyclerView") int position) {
-        holderpos=position;
+    public void onBindViewHolder(@NonNull cart_adapter.myviewholder holder, @SuppressLint("RecyclerView") int position) {
 
-    holder.textView2.setText(productmodels1.get(position).getTitle());
-    holder.textView3.setText(productmodels1.get(position).getDescription());
-    holder.textView4.setText(productmodels1.get(position).getCost());
-    holder.textView5.setText(productmodels1.get(position).getCount());
+
+        holder.textView2.setText(productmodels1.get(position).getTitle());
+        holder.textView3.setText(productmodels1.get(position).getDescription());
+        holder.textView4.setText(productmodels1.get(position).getCost());
+        holder.textView5.setText(productmodels1.get(position).getCount());
         StorageReference storageRef = FirebaseStorage.getInstance().getReference("productimages").child(productmodels1.get(position).getimagename());
         final long TEN_MEGABYTES = 1024 * 1024;
         storageRef.getBytes(TEN_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -71,7 +71,13 @@ public class pc_adapter extends RecyclerView.Adapter<pc_adapter.myviewholder> {
         holder.imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClicked(productmodels1.get(position));
+                holderpos=position;listener.onItemClicked(productmodels1.get(position));
+                int position = holder.getLayoutPosition();
+                if (position!= RecyclerView.NO_POSITION && position>=0) {
+                    // Remove the item from the list
+                    productmodels1.remove(position);
+                    notifyItemRemoved(position);
+                }
             }
         });
     }
@@ -87,17 +93,23 @@ public class pc_adapter extends RecyclerView.Adapter<pc_adapter.myviewholder> {
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
-            imageView=itemView.findViewById(R.id.imageView);
-            textView2=itemView.findViewById(R.id.textView2);
-            textView3=itemView.findViewById(R.id.textView3);
-            textView4=itemView.findViewById(R.id.textView4);
-            textView5=itemView.findViewById(R.id.textView5);
-            imageview=itemView.findViewById(R.id.imageView7);
+            imageView=itemView.findViewById(R.id.imageView11);
+            textView2=itemView.findViewById(R.id.textView12);
+            textView3=itemView.findViewById(R.id.textView13);
+            textView4=itemView.findViewById(R.id.textView14);
+            textView5=itemView.findViewById(R.id.textView15);
+            imageview=itemView.findViewById(R.id.imageView16);
         }
     }
     public void setItems(ArrayList<productmodel>items) {
         productmodels1.clear();
-        productmodels1.addAll(new ArrayList<>(new HashSet<>(items)));
+        productmodels1.addAll(items);
+        notifyDataSetChanged();
+    }
+    public void remove(ArrayList<productmodel>items){
+        productmodels1.clear();
+        productmodels1.addAll(items);
+        notifyItemRemoved(holderpos);
     }
     public void retrieveItems(ArrayList<productmodel>items){
         productmodels1.addAll(new ArrayList<>(new HashSet<>(items)));
