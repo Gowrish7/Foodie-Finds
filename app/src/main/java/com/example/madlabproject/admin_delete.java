@@ -1,6 +1,8 @@
 package com.example.madlabproject;
 
 import androidx.annotation.NonNull;
+import java.util.HashSet;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,7 +36,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -44,12 +45,15 @@ import com.google.firebase.storage.StorageReference;
 
 import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
-public class user_panel extends AppCompatActivity implements selectlistener{
+public class admin_delete extends AppCompatActivity implements selectlistener{
+    String []title = new String[100];
+    String []desc = new String[100];
+    String []cost = new String[100];
+    String []count = new String[100];
+    String []imagename = new String[100];
     ArrayList<productmodel> productmodels=new ArrayList<>();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -57,10 +61,10 @@ public class user_panel extends AppCompatActivity implements selectlistener{
     Button search;
     EditText searchbar;
     ArrayList<productmodel> searchResults;
-    CollectionReference collectionRef = firestore.collection("products");
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
-    FirebaseUser currentUser = mAuth.getCurrentUser();
-    CollectionReference collectionRef1 = firestore.collection("users/"+currentUser.getEmail()+"/products");
+    cart_adapter adapter=new cart_adapter(this,productmodels,"",productmodels,this);
+
+    CollectionReference collectionRef = firestore.collection("products");
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -68,28 +72,29 @@ public class user_panel extends AppCompatActivity implements selectlistener{
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_menu, menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.aitem) {
             // Handle search action
-            Toast.makeText(user_panel.this, "cart clicked", Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(getApplicationContext(), cart.class);
+            Toast.makeText(admin_delete.this, "add items clicked", Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(getApplicationContext(), admin_panel.class);
             startActivity(intent);
             finish();
             return true;
         } else if (id == R.id.ditem) {
-            Intent intent=new Intent(getApplicationContext(), user_panel.class);
+            Toast.makeText(admin_delete.this, "delete items clicked", Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(getApplicationContext(), admin_delete.class);
             startActivity(intent);
             finish();
-            Toast.makeText(user_panel.this, "search clicked", Toast.LENGTH_SHORT).show();
             // Handle settings action
             return true;
         }else if (id == R.id.logout) {
-            Toast.makeText(user_panel.this, "logout clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(admin_delete.this, "logout clicked", Toast.LENGTH_SHORT).show();
             FirebaseAuth.getInstance().signOut();
             Intent intent=new Intent(getApplicationContext(), choose.class);
             startActivity(intent);
@@ -111,13 +116,11 @@ public class user_panel extends AppCompatActivity implements selectlistener{
         assert actionBar != null;
         actionBar.setTitle("Foodie Finds");
         actionBar.setBackgroundDrawable(colorDrawable);
-        setContentView(R.layout.activity_user_panel);
+        setContentView(R.layout.activity_admin_delete);
         search=findViewById(R.id.search);
         searchbar=findViewById(R.id.searchbar);
         RecyclerView recyclerview=findViewById(R.id.recyclerView3);
         setupproductmodels();
-//        recyclerview.bringToFront();
-        pc_adapter adapter=new pc_adapter(this,productmodels,"",productmodels,this);
         recyclerview.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -127,22 +130,6 @@ public class user_panel extends AppCompatActivity implements selectlistener{
             }
         },1000);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        collectionRef1.document("product0")
-                .set(new HashMap<>())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Empty document created successfully
-                        //Toast.makeText(user_panel.this, "Empty document created", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Failed to create empty document
-                        //Toast.makeText(user_panel.this, "Failed to create empty document", Toast.LENGTH_SHORT).show();
-                    }
-                });
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,19 +137,19 @@ public class user_panel extends AppCompatActivity implements selectlistener{
                 String searchText = searchbar.getText().toString().trim();
                 if (!searchText.isEmpty()) {
 
-                        searchResults = new ArrayList<>();
-                        for (productmodel item : productmodels) {
-                            if (item.getTitle().toLowerCase().equals(searchText.toLowerCase())) {
-                                searchResults.add(item);
-                            }
+                    searchResults = new ArrayList<>();
+                    for (productmodel item : productmodels) {
+                        if (item.getTitle().toLowerCase().equals(searchText.toLowerCase())) {
+                            searchResults.add(item);
                         }
+                    }
                     // Update the adapter with search results
                     adapter.setItems(searchResults);
                     adapter.notifyDataSetChanged();
                 } else {
                     // Clear the search results and show all items
-//                    adapter.setItems(productmodels);
-//                    adapter.notifyDataSetChanged();
+                    adapter.setItems(productmodels);
+                    adapter.notifyDataSetChanged();
                     searchbar.setText("");
                 }
             }
@@ -199,18 +186,16 @@ public class user_panel extends AppCompatActivity implements selectlistener{
                     }
                 }
             }
-        });
+       });
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+        //super.onBackPressed();
+        Intent i=new Intent(admin_delete.this, admin_panel.class);
+        startActivity(i);
     }
     private void setupproductmodels(){
-        String []title = new String[100];
-        String []desc = new String[100];
-        String []cost = new String[100];
-        String []count = new String[100];
-        String []imagename = new String[100];
         collectionRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -223,15 +208,20 @@ public class user_panel extends AppCompatActivity implements selectlistener{
 
                                 for (DocumentSnapshot document : documents) {
                                     int i=0;
-                                    // Access the field values for each document
-                                    title[i] = document.getString("title");
-                                    desc[i] = document.getString("description");
-                                    cost[i] = document.getString("cost");
-                                    count[i] = document.getString("count");
-                                    imagename[i]=title[i]+cost[i];
-                                    productmodels.add(new productmodel(title[i],desc[i],cost[i],count[i],imagename[i]));
-                                    i++;
+                                    if(document.getString("title")!=null) {
+                                        // Access the field values for each document
+                                        title[i] = document.getString("title");
+                                        desc[i] = document.getString("description");
+                                        cost[i] = document.getString("cost");
+                                        count[i] = document.getString("count");
+                                        imagename[i] = title[i] + cost[i];
+                                        productmodels.add(new productmodel(title[i], desc[i], cost[i], count[i], imagename[i]));
+                                        i++;
+                                    }
                                 }
+                            }
+                            else{
+                                Toast.makeText(admin_delete.this, "Cart is empty" , Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -239,43 +229,82 @@ public class user_panel extends AppCompatActivity implements selectlistener{
 
     }
 
+
     @Override
     public void onItemClicked(productmodel productmodel1) {
-        Toast.makeText(user_panel.this, productmodel1.getTitle(), Toast.LENGTH_SHORT).show();
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = firestore.collection("users/"+ currentUser.getEmail().toString()+"/products");
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    QuerySnapshot querySnapshot = task.getResult();
+        CollectionReference collectionRef = firestore.collection("products");
 
-                    if (querySnapshot != null) {
-                        int documentcount = (querySnapshot.size() + 2);
-                        DocumentReference docref = firestore.collection("users").document(currentUser.getEmail().toString()).collection("products").document();
-                        Map<String, Object> data = new HashMap<>();
-                        data.put("title", productmodel1.getTitle());
-                        data.put("description", productmodel1.getDescription());
-                        data.put("cost", productmodel1.getCost());
-                        data.put("count", productmodel1.getCount());
-                        data.put("imagename",productmodel1.getimagename());
-                        docref.set(data)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(user_panel.this, "Product added",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(user_panel.this, "Product addition failed",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+// Define the title and cost of the document to delete
+        String documentTitleToDelete = productmodel1.getTitle();
+        String documentCostToDelete = productmodel1.getCost();
+        String documentdescToDelete = productmodel1.getDescription();
+        String documentcountToDelete = productmodel1.getCount();
+        String documentimagenameToDelete = productmodel1.getimagename();
+//        productmodels.remove(new productmodel(documentTitleToDelete, documentCostToDelete, documentdescToDelete, documentcountToDelete, documentimagenameToDelete));
+
+        // Replace with the desired cost
+
+// Query the collection to find the document with the matching title and cost
+        collectionRef.whereEqualTo("title", documentTitleToDelete)
+                .whereEqualTo("cost", documentCostToDelete)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                            // Delete the document
+                            document.getReference().delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Document successfully deleted
+                                            Toast.makeText(admin_delete.this, "Product deleted", Toast.LENGTH_SHORT).show();
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // An error occurred while deleting the document
+                                            Toast.makeText(admin_delete.this, "Product deletion failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
                     }
-                }
-                }
-            });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // An error occurred while querying the collection
+                        Toast.makeText(admin_delete.this, "Product deletion failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    public static String[] delete(String[] array, String element) {
+        // Find the index of the element in the array
+        int index = -1;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null && array[i].equals(element)) {
+                index = i;
+                break;
+            }
         }
+
+        // If the element is found, create a new array without the element
+        if (index != -1) {
+            String[] newArray = new String[array.length - 1];
+            int newArrayIndex = 0;
+            for (int i = 0; i < array.length; i++) {
+                if (i != index) {
+                    newArray[newArrayIndex] = array[i];
+                    newArrayIndex++;
+                }
+            }
+            return newArray;
+        }
+
+        // If the element is not found, return the original array
+        return array;
+    }
 }

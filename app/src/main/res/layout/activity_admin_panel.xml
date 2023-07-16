@@ -5,8 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mainpage1"
     tools:context=".admin_panel">
-    
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -25,76 +26,94 @@
 
         <TextView
             android:id="@+id/note"
-            android:layout_width="match_parent"
+            android:layout_width="298dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins_extrabold"
             android:text="Admin Panel"
             android:textAlignment="center"
-            android:textSize="30dp" />
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageview"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:background="@color/grey1"
+            android:contentDescription="Add Items"
             android:contextClickable="true"
-            android:tooltipText="Add image"
-            android:keepScreenOn="false"/>
+            android:keepScreenOn="false"
+            android:tooltipText="Add image" />
+
         <EditText
             android:id="@+id/demotextfield"
-            android:background="@color/grey1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="299dp"
+            android:layout_height="48dp"
             android:layout_marginTop="10dp"
-            android:hint="Enter title"
-            android:textColorHint="@color/black"/>
+            android:background="@color/grey1"
+            android:fontFamily="@font/poppins_light"
+            android:hint="Enter product title"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textColorHint="@color/black" />
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
+            android:layout_width="299dp"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:background="@color/grey1"
             android:layout_marginBottom="10dp"
-            android:layout_height="58dp"
+            android:background="@color/grey1"
             android:isScrollContainer="true" />
 
         <EditText
             android:id="@+id/demotextfielddescription"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:background="@color/grey1"
+            android:layout_width="299dp"
+            android:layout_height="54dp"
             android:layout_marginBottom="10dp"
-            android:hint="Enter Description"
+            android:background="@color/grey1"
+            android:fontFamily="@font/poppins_light"
+            android:hint="Enter product Description"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
             android:textColorHint="@color/black" />
+
         <EditText
             android:id="@+id/demotextfieldcount"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:background="@color/grey1"
+            android:layout_width="303dp"
+            android:layout_height="54dp"
             android:layout_marginBottom="10dp"
+            android:background="@color/grey1"
+            android:fontFamily="@font/poppins_light"
             android:hint="Enter Unit count"
+            android:textAlignment="center"
             android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/demotextfieldcost"
-            android:layout_width="match_parent"
+            android:layout_width="305dp"
             android:layout_height="50dp"
-            android:background="@color/grey1"
             android:layout_marginBottom="10dp"
+            android:background="@color/grey1"
+            android:fontFamily="@font/poppins_light"
             android:hint="Enter Cost"
-            android:textColorHint="@color/black"/>
+            android:textAlignment="center"
+            android:textColorHint="@color/black" />
 
         <Button
             android:id="@+id/set"
-            android:layout_width="match_parent"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Add item" />
 
         <Button
             android:id="@+id/logout"
-            android:layout_width="match_parent"
+            android:layout_width="307dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
             android:text="logout" />
     </LinearLayout>
 
