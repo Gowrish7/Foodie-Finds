@@ -3,6 +3,7 @@ package com.example.madlabproject;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -43,6 +44,8 @@ public class login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         setContentView(R.layout.activity_login);
         text=findViewById(R.id.email);
         text1=findViewById(R.id.password);
@@ -103,5 +106,11 @@ public class login extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent i=new Intent(login.this, choose.class);
+        startActivity(i);
     }
 }

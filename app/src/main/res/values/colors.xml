@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color>
     <color name="grey1">#cccccc</color>
+    <color name="mainpage1">#22C7A9</color>
+    <color name="adminmp1">#2DB6A3</color>
+    <color name="prodback">#EDF3ED</color>
 </resources>

@@ -14,6 +14,12 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".admin_delete"
+            android:exported="false" />
+        <activity
+            android:name=".cart"
+            android:exported="false" />
+        <activity
             android:name=".user_panel"
             android:exported="false" />
         <activity
@@ -62,6 +68,10 @@
             <!-- <category android:name="android.com.example.madlabproject.intent.category.LAUNCHER" /> -->
             <!-- </com.example.madlabproject.intent-filter> -->
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

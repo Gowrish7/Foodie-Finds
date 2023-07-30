@@ -4,10 +4,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -28,6 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,25 +60,44 @@ public class admin_panel extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.aitem:
-                Toast.makeText(admin_panel.this, "add item clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.ditem:
-                Toast.makeText(admin_panel.this, "delete item clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.logout:
-                Toast.makeText(admin_panel.this, "logout clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+
+        if (id == R.id.aitem) {
+            // Handle search action
+            Toast.makeText(admin_panel.this, "add items clicked", Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(getApplicationContext(), admin_panel.class);
+            startActivity(intent);
+            finish();
+            return true;
+        } else if (id == R.id.ditem) {
+            Toast.makeText(admin_panel.this, "delete items clicked", Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(getApplicationContext(), admin_delete.class);
+            startActivity(intent);
+            finish();
+            // Handle settings action
+            return true;
+        }else if (id == R.id.logout) {
+            Toast.makeText(admin_panel.this, "logout clicked", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+            Intent intent=new Intent(getApplicationContext(), choose.class);
+            startActivity(intent);
+            finish();
+            // Handle settings action
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#22C7A9"));
+        assert actionBar != null;
+        actionBar.setTitle("Foodie Finds");
+        actionBar.setBackgroundDrawable(colorDrawable);
         setContentView(R.layout.activity_admin_panel);
         Spinner spinner=findViewById(R.id.spinner);
         ArrayAdapter<CharSequence>adapter= ArrayAdapter.createFromResource(this, R.array.languages, android.R.layout.simple_spinner_dropdown_item);
@@ -164,7 +187,8 @@ public class admin_panel extends AppCompatActivity {
 
                             if (querySnapshot != null) {
                                 documentcount = (querySnapshot.size()+2);
-                                DocumentReference docref=firestore.collection("products").document("product"+documentcount);
+                                DocumentReference docref=firestore.collection("products").document();
+                               // "product"+documentcount
                                 Map<String, Object> data = new HashMap<>();
                                 data.put("title", demotextfield.getText().toString());
                                 data.put("description", demotextfielddescription.getText().toString());
@@ -199,5 +223,9 @@ public class admin_panel extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
